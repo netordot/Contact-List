@@ -12,7 +12,7 @@ namespace ContactList.Application.Contact.UpdateContact
     /// <summary>
     /// Метод для обновления главной информации контакта, ищет по имени
     /// </summary>
-    public class UpdateContactHandler
+    public class UpdateContactHandler : IUpdateContactHandler
     {
         private readonly IContactRepository _repository;
         public UpdateContactHandler(IContactRepository repository)
