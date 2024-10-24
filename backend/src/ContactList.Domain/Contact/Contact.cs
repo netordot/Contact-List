@@ -11,6 +11,7 @@ namespace ContactList.Domain.Contact
 {
     public class Contact : Shared.Entity<ContactId>
     {
+        private bool _isDeleted;
         public string Name { get; private set; }
         public PhoneNumber PhoneNumber { get; private set; }
         public string? Description { get; private set; }
@@ -41,6 +42,16 @@ namespace ContactList.Domain.Contact
 
             var contact = new Contact(name, phoneNumber, description, id, email);
             return contact;
+        }
+
+        public void Delete()
+        {
+            _isDeleted = true;
+        }
+
+        public void Restore()
+        {
+            _isDeleted = false;
         }
     }
 }

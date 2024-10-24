@@ -13,7 +13,6 @@ namespace ContactList.Persistence
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>();
-            
 
             return services;
         }

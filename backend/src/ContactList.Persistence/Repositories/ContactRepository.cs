@@ -60,6 +60,11 @@ namespace ContactList.Persistence.Repositories
             await _context.SaveChangesAsync(); 
         }
 
+        public async Task<List<Contact>> GetAll()
+        {
+            return await _context.Contacts.ToListAsync();
+        }
+
 
     }
 }
