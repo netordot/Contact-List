@@ -53,5 +53,12 @@ namespace ContactList.Domain.Contact
         {
             _isDeleted = false;
         }
+
+        public void UpdateMainInfo(Email mail, PhoneNumber number, string? description)
+        {
+            Email = mail;
+            PhoneNumber = number;
+            Description = description;  
+        }
     }
 }
