@@ -55,6 +55,21 @@ namespace ContactList.Persistence.Repositories
             return Id.Value;
         }
 
+        public async Task<Result<Contact, Error>> GetByName(string name)
+        {
+            var result = await _context
+                .Contacts
+                .FirstOrDefaultAsync(c => c.Name == name);
+
+            if (result == null)
+            {
+                return Errors.General.NotFound();
+            }
+
+            return result;
+
+        }
+
         public async Task Save(Contact contact)
         {
             _context.Contacts.Attach(contact);
