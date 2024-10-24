@@ -9,14 +9,19 @@ using System.Threading.Tasks;
 
 namespace ContactList.Domain.Contact
 {
-    public class Contact
+    public class Contact : Shared.Entity<ContactId>
     {
         public string Name { get; private set; }
         public PhoneNumber PhoneNumber { get; private set; }
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
         public ContactId Id { get; private set; }
 
+        private Contact(ContactId id) : base(id)
+        {
+        }
+
         private Contact(string name, PhoneNumber phoneNumber, string description, ContactId id)
+            :base(id)
         {
             Name = name;
             PhoneNumber = phoneNumber;
@@ -24,7 +29,7 @@ namespace ContactList.Domain.Contact
             Id = id;
         }
 
-        public static Result<Contact,Error> Create(string name, PhoneNumber phoneNumber, string description, ContactId id)
+        public static Result<Contact, Error> Create(string name, PhoneNumber phoneNumber, string description, ContactId id)
         {
             var contact = new Contact(name, phoneNumber, description, id);
             return contact;
