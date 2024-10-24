@@ -20,8 +20,4 @@
     <ProjectReference Include="..\ContactList.Application\ContactList.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>
