@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ContactList.Application.Contact.CreateContact
 {
-    public class CreateContactHandler
+    public class CreateContactHandler : ICreateContactHandler
     {
         // подключить fluentValidation
         private readonly IContactRepository _repository;
@@ -28,8 +28,8 @@ namespace ContactList.Application.Contact.CreateContact
 
             var contactResult = Domain.Contact.Contact.Create(command.Name, number, command.Description, contactId, email);
 
-            var result =await _repository.Create(contactResult.Value, cancellation);
-            if(result.IsFailure)
+            var result = await _repository.Create(contactResult.Value, cancellation);
+            if (result.IsFailure)
             {
                 return result.Error;
             }

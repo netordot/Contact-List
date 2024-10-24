@@ -13,7 +13,7 @@ namespace ContactList.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<CreateContactHandler>();
+            services.AddScoped<ICreateContactHandler, CreateContactHandler>();
 
             //services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 
