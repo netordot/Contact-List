@@ -20,11 +20,12 @@ namespace ContactList.Application.Contact.UpdateContact
             _repository = repository;
         }
 
-        public async Task<Result<Guid, Error>> Handle(UpdateContactCommad command)
+        public async Task<Result<Guid, Error>> Handle(UpdateContactCommad command, CancellationToken cancellation)
         {
             // валидация 
 
-            var contact = await _repository.GetByName(command.Name);
+            var Id = ContactId.Create(command.Id);
+            var contact = await _repository.GetById(Id, cancellation);
             if (contact.IsFailure)
             {
                 return contact.Error;
