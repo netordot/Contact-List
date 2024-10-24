@@ -2,6 +2,7 @@
 using ContactList.API.Contracts.Requests;
 using ContactList.API.Contracts.Response;
 using ContactList.Application.Contact.CreateContact;
+using ContactList.Application.Contact.Delete;
 using ContactList.Application.Contact.GetAll;
 using ContactList.Application.Contact.GetByName;
 using ContactList.Application.Contact.UpdateContact;
@@ -79,6 +80,17 @@ namespace ContactList.API.Controllers
                 contact.Value.Description);
 
             return result;
+        }
+
+        [HttpDelete("{id:guid}/delete")]
+        public async Task<ActionResult> Delete
+            ([FromServices] IDeleteContactHandler handler,
+            [FromRoute] Guid id,
+            CancellationToken cancellation)
+        {
+            var result = await handler.Handle(id, cancellation);
+
+            return new ObjectResult(result.Value) { StatusCode= 200 };
         }
     }
 }
