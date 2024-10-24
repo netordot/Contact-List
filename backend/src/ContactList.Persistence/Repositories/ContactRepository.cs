@@ -1,4 +1,5 @@
-﻿using ContactList.Domain.Contact;
+﻿using ContactList.Application.Contact;
+using ContactList.Domain.Contact;
 using ContactList.Domain.Contact.Shared;
 using ContactList.Domain.Contact.ValueObjects;
 using CSharpFunctionalExtensions;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ContactList.Persistence.Repositories
 {
-    public class ContactRepository
+    public class ContactRepository : IContactRepository
     {
         private readonly ApplicationDbContext _context;
         public ContactRepository(ApplicationDbContext context)
@@ -51,13 +52,13 @@ namespace ContactList.Persistence.Repositories
 
             _context.Contacts.Remove(contactToDelete.Value);
             await _context.SaveChangesAsync();
-            return Id.Value; 
+            return Id.Value;
         }
 
         public async Task Save(Contact contact)
         {
-            _context.Contacts.Attach(contact);  
-            await _context.SaveChangesAsync(); 
+            _context.Contacts.Attach(contact);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<Contact>> GetAll()
