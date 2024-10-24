@@ -16,7 +16,7 @@ namespace ContactList.Domain.Contact
         public string? Description { get; private set; }
         public ContactId Id { get; private set; }
 
-        public Email? Email { get; private set; }
+        public Email Email { get; private set; }
 
         private Contact(ContactId id) : base(id)
         {

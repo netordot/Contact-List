@@ -1,0 +1,16 @@
+﻿services:
+  postgres:
+    container_name: postgres_contact
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: test_contact
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5431:5432
+    volumes:
+      - postgres-contacts-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-contacts-data:
