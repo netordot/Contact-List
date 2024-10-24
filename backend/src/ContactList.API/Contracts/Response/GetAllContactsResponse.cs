@@ -1,6 +1,8 @@
-﻿namespace ContactList.API.Contracts.Response
+﻿using ContactList.Application.Contact.CreateContact;
+using ContactList.Application.Contact.UpdateContact;
+
+namespace ContactList.API.Contracts.Response
 {
-    public class GetAllContactsResponse
-    {
-    }
+    public record GetAllContactsResponse(List<UpdateContactCommad> contacts);
+    
 }

@@ -1,7 +1,9 @@
-﻿using ContactList.API.Contracts.Requests;
+﻿using ContactList.API.Contracts;
+using ContactList.API.Contracts.Requests;
 using ContactList.API.Contracts.Response;
 using ContactList.Application.Contact.CreateContact;
 using ContactList.Application.Contact.GetAll;
+using ContactList.Application.Contact.GetByName;
 using ContactList.Application.Contact.UpdateContact;
 using ContactList.Domain.Contact;
 using Microsoft.AspNetCore.Http;
@@ -54,11 +56,29 @@ namespace ContactList.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Contact>>> GetAll(CancellationToken cancellation, [FromServices] IGetAllContactsHandler handler)
+        public async Task<ActionResult<List<Contact>>> GetAll(
+            CancellationToken cancellation,
+            [FromServices] IGetAllContactsHandler handler)
         {
             var result = await handler.Handle(cancellation);
 
             return result.Value;
+        }
+
+        [HttpGet("{Name:alpha}/get")]
+        public async Task<ActionResult<ContactDto>> GetByName(
+            [FromBody] string Name,
+            [FromServices] IGetByNameHandler handler,
+            CancellationToken cancellation)
+        {
+            var contact = await handler.Handle(Name, cancellation) ;
+            var result = new ContactDto(
+                contact.Value.Id.Value,
+                contact.Value.Name, 
+                contact.Value.PhoneNumber.Number, 
+                contact.Value.Description);
+
+            return result;
         }
     }
 }

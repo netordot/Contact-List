@@ -1,4 +1,6 @@
 ﻿using ContactList.Application.Contact.CreateContact;
+using ContactList.Application.Contact.GetAll;
+using ContactList.Application.Contact.UpdateContact;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,9 @@ namespace ContactList.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<ICreateContactHandler, CreateContactHandler>();
+            services.AddScoped<IUpdateContactHandler, UpdateContactHandler>();
+            services.AddScoped<IGetAllContactsHandler, GetAllContactsHandler>();
+            services.AddScoped<IGetAllContactsHandler, GetAllContactsHandler>();
 
             //services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 
