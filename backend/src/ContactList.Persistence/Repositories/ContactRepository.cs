@@ -57,6 +57,7 @@ namespace ContactList.Persistence.Repositories
         public async Task Save(Contact contact)
         {
             _context.Contacts.Attach(contact);  
+            await _context.SaveChangesAsync(); 
         }
 
 
