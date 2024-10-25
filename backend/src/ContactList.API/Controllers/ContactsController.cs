@@ -32,7 +32,7 @@ namespace ContactList.API.Controllers
             // добавить расширение для ошибки
             int a = 10;
 
-            return new ObjectResult(result) { StatusCode = 200 };
+            return new ObjectResult(result.Value) { StatusCode = 200 };
 
         }
 
