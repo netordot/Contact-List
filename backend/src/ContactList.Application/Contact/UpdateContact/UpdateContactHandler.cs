@@ -11,9 +11,6 @@ using System.Threading.Tasks;
 
 namespace ContactList.Application.Contact.UpdateContact
 {
-    /// <summary>
-    /// Метод для обновления главной информации контакта, ищет по Id
-    /// </summary>
     public class UpdateContactHandler : IUpdateContactHandler
     {
         private readonly IContactRepository _repository;
@@ -28,7 +25,7 @@ namespace ContactList.Application.Contact.UpdateContact
         public async Task<Result<Guid, ErrorList>> Handle(UpdateContactCommad command, CancellationToken cancellation)
         {
             var validationResult = await _validator.ValidateAsync(command, cancellation);
-            if(validationResult.IsValid == false)
+            if (validationResult.IsValid == false)
             {
                 return validationResult.ToErrorList();
             }
