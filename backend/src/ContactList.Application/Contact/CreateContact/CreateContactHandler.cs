@@ -18,7 +18,7 @@ namespace ContactList.Application.Contact.CreateContact
             _repository = repository;
         }
 
-        public async Task<Result<Error, Guid>> Handle(CreateContactCommand command, CancellationToken cancellation)
+        public async Task<Result<Error,Guid>> Handle(CreateContactCommand command, CancellationToken cancellation)
         {
             // TODO: добавить валидацию
             var contactId = ContactId.NewContactId;
@@ -29,12 +29,16 @@ namespace ContactList.Application.Contact.CreateContact
             var contactResult = Domain.Contact.Contact.Create(command.Name, number, command.Description, contactId, email);
 
             var result = await _repository.Create(contactResult.Value, cancellation);
-            if (result.IsFailure)
-            {
-                return result.Error;
-            }
 
-            return result.Value;
+            //if (result.IsFailure)
+            //{
+            //    return result.Error;
+            //}
+            int a = 10;
+
+            var idtoreturn = result.Value;
+
+            return idtoreturn;
         }
     }
 }

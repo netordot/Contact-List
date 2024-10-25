@@ -22,9 +22,16 @@ namespace ContactList.Persistence.Repositories
 
         public async Task<Result<Contact, Error>> GetById(ContactId Id, CancellationToken cancellation)
         {
+            var newId = Id.Value;
+            if (Id == null)
+            {
+                return Errors.General.ValueIsInvalid("ContactId cannot be null.");
+            }
+
             var contactResult = await _context
                 .Contacts
-                .FirstOrDefaultAsync(c => c.Id == Id);
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == newId, cancellation);
 
             if (contactResult == null)
             {
@@ -33,6 +40,18 @@ namespace ContactList.Persistence.Repositories
 
             return contactResult;
         }
+
+        public async Task<List<Contact>> Get()
+        {
+            var contacts = await _context.Contacts.AsNoTracking().ToListAsync();
+
+            var result = contacts
+                .Select(c => Contact.Create(c.Name, c.PhoneNumber, c.Description, c.Id, c.Email).Value)
+                .ToList();
+
+            return contacts;
+        }
+
 
         public async Task<Result<Guid, Error>> Create(Contact contact, CancellationToken cancellation)
         {
@@ -59,6 +78,7 @@ namespace ContactList.Persistence.Repositories
         {
             var result = await _context
                 .Contacts
+                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Name == name);
 
             if (result == null)
@@ -75,12 +95,5 @@ namespace ContactList.Persistence.Repositories
             _context.Contacts.Attach(contact);
             await _context.SaveChangesAsync();
         }
-
-        public async Task<List<Contact>> GetAll()
-        {
-            return await _context.Contacts.ToListAsync();
-        }
-
-
     }
 }

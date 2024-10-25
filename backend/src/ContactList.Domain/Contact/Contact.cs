@@ -29,8 +29,8 @@ namespace ContactList.Domain.Contact
             Name = name;
             PhoneNumber = phoneNumber;
             Description = description;
-            Id = id;
             Email = email;
+            Id = id;
         }
 
         public static Result<Contact, Error> Create(string name, PhoneNumber phoneNumber, string description, ContactId id, Email email)

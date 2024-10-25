@@ -1,5 +1,5 @@
 ﻿namespace ContactList.API.Contracts
 {
-    public record ContactDto(Guid Id, string Name, string Number, string Description);
+    public record ContactDto(string Name, string Number, string Description, string Email);
    
 }

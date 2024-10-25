@@ -13,9 +13,9 @@ namespace ContactList.Application.Contact
     {
         Task<Result<Guid, Error>> Create(Domain.Contact.Contact contact, CancellationToken cancellation);
         Task<Result<Guid, Error>> Delete(ContactId Id, CancellationToken cancellation);
-        Task<List<Domain.Contact.Contact>> GetAll();
         Task<Result<Domain.Contact.Contact, Error>> GetById(ContactId Id, CancellationToken cancellation);
         Task Save(Domain.Contact.Contact contact);
         Task<Result<Domain.Contact.Contact, Error>> GetByName(string name);
+        Task<List<Domain.Contact.Contact>> Get();
     }
 }

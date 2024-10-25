@@ -14,14 +14,13 @@ namespace ContactList.Domain.Contact.ValueObjects
         {
             Value = value;
         }
-
         public static ContactId NewContactId => new(Guid.NewGuid());
         public static ContactId Empty => new(Guid.Empty);
         public static ContactId Create(Guid id) => new(id);
-        public static implicit operator Guid(ContactId volunteerId)
+        public static implicit operator Guid(ContactId сontactId)
         {
-            ArgumentNullException.ThrowIfNull(volunteerId);
-            return volunteerId.Value;
+            ArgumentNullException.ThrowIfNull(сontactId);
+            return сontactId.Value;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace ContactList.Application.Contact.GetAll
 
         public async Task<Result<List<Domain.Contact.Contact>, Error>> Handle(CancellationToken cancellation)
         {
-            var result = await _repository.GetAll();
+            var result = await _repository.Get();
             if (result == null)
             {
                 return Errors.General.NotFound();
