@@ -40,10 +40,6 @@ namespace ContactList.Persistence.Configurations
 
             builder.Property(c => c.Name)
                 .HasMaxLength(Constants.MAX_SHORT_TEXT_SIZE);
-
-            builder.Property<bool>("_isDeleted")
-                .UsePropertyAccessMode(PropertyAccessMode.Field)
-                .HasColumnName("deleted");
         }
     }
 }

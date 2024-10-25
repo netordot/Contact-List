@@ -18,14 +18,14 @@ namespace ContactList.Application.Contact.Delete
             _repository = repository;
         }
 
-        public async Task<Result<Error, Guid>> Handle(Guid Id, CancellationToken cancellation)
+        public async Task<Result<Error, Guid>> Handle(Guid id, CancellationToken cancellation)
         {
-            var contact = await _repository.GetById(ContactId.Create(Id), cancellation);
-
-            contact.Value.Delete();
-
-            return contact.Value.Id.Value;
-
+            var result = await _repository.Delete(ContactId.Create(id), cancellation);
+            if (result.IsFailure)
+            {
+                return result.Error;
+            }
+            return result.Value;
         }
     }
 }

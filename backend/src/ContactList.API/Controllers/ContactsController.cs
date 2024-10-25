@@ -91,9 +91,17 @@ namespace ContactList.API.Controllers
             [FromRoute] Guid id,
             CancellationToken cancellation)
         {
-            var result = await handler.Handle(id, cancellation);
+            {
+                var result = await handler.Handle(id, cancellation);
 
-            return new ObjectResult(result.Value) { StatusCode = 200 };
+                if (result.IsFailure)
+                {
+                    return Ok(new { success = false, error = result.Error });
+                }
+
+                return Ok(new { success = true, id = result.Value });
+            }
         }
     }
+
 }
