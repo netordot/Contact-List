@@ -30,12 +30,13 @@ namespace ContactList.API.Controllers
 
             var result = await handler.Handle(command, cancellation);
             // добавить расширение для ошибки
+            int a = 10;
 
             return new ObjectResult(result.Value) { StatusCode = 200 };
 
         }
 
-        [HttpPatch("{id:guid}/update")]
+        [HttpPut("{id:guid}/update")]
         public async Task<ActionResult> Update(
             [FromRoute] Guid id,
             [FromBody] UpdateContactRequest request,
@@ -57,27 +58,29 @@ namespace ContactList.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Contact>>> GetAll(
+        public async Task<ActionResult<List<ContactDto>>> GetAll(
             CancellationToken cancellation,
             [FromServices] IGetAllContactsHandler handler)
         {
-            var result = await handler.Handle(cancellation);
+            var contacts = await handler.Handle(cancellation);
+            var result = contacts.Value.Select(c => new ContactDto(c.Name, c.PhoneNumber.Number, c.Description, c.Email.Mail)).ToList();
 
-            return result.Value;
+
+            return result;
         }
 
-        [HttpGet("{Name:alpha}/get")]
+        [HttpGet("{id:guid}/get")]
         public async Task<ActionResult<ContactDto>> GetByName(
-            [FromBody] string Name,
-            [FromServices] IGetByNameHandler handler,
+             [FromRoute] Guid id,
+            [FromServices] IGetByIdHandler handler,
             CancellationToken cancellation)
         {
-            var contact = await handler.Handle(Name, cancellation) ;
+            var contact = await handler.Handle(id, cancellation);
             var result = new ContactDto(
-                contact.Value.Id.Value,
-                contact.Value.Name, 
-                contact.Value.PhoneNumber.Number, 
-                contact.Value.Description);
+                contact.Value.Name,
+                contact.Value.PhoneNumber.Number,
+                contact.Value.Description,
+                contact.Value.Email.Mail);
 
             return result;
         }
@@ -88,9 +91,17 @@ namespace ContactList.API.Controllers
             [FromRoute] Guid id,
             CancellationToken cancellation)
         {
-            var result = await handler.Handle(id, cancellation);
+            {
+                var result = await handler.Handle(id, cancellation);
 
-            return new ObjectResult(result.Value) { StatusCode= 200 };
+                if (result.IsFailure)
+                {
+                    return Ok(new { success = false, error = result.Error });
+                }
+
+                return Ok(new { success = true, id = result.Value });
+            }
         }
     }
+
 }

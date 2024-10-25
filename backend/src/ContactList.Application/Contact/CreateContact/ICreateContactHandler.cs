@@ -5,6 +5,7 @@ namespace ContactList.Application.Contact.CreateContact
 {
     public interface ICreateContactHandler
     {
-        Task<Result<Error, Guid>> Handle(CreateContactCommand command, CancellationToken cancellation);
+        Task<Result<Guid, Error>> Handle(CreateContactCommand command, CancellationToken cancellation);
+            
     }
 }
