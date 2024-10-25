@@ -17,5 +17,6 @@ namespace ContactList.Application.Contact
         Task Save(Domain.Contact.Contact contact);
         Task<Result<Domain.Contact.Contact, Error>> GetByName(string name);
         Task<List<Domain.Contact.Contact>> Get();
+        Task<Guid> Update(Guid id, PhoneNumber number, string name, Email email, string descritprion);
     }
 }

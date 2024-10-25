@@ -90,6 +90,24 @@ namespace ContactList.Persistence.Repositories
 
         }
 
+        public async Task<Guid> Update(Guid id, PhoneNumber number, string name, Email email, string descritprion)
+        {
+            //await _context.Contacts
+            //    .Where(c => c.Id == id)
+            //    .ExecuteUpdateAsync(a => a
+            //    .SetProperty(c => c.PhoneNumber, c => number)
+            //    .SetProperty(c => c.Email, c => email)
+            //    .SetProperty(c => c.Description, c => descritprion)
+            //    .SetProperty(c => c.Name, c => name));
+
+            var contactToUpdate = Contact.Create(name, number, descritprion, ContactId.Create(id), email);
+             _context.Contacts.Update(contactToUpdate.Value);
+
+            await _context.SaveChangesAsync();
+
+            return id;
+        }
+
         public async Task Save(Contact contact)
         {
             _context.Contacts.Attach(contact);

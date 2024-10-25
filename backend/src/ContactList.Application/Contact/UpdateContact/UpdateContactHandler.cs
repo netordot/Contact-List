@@ -34,8 +34,10 @@ namespace ContactList.Application.Contact.UpdateContact
             var email = Domain.Contact.ValueObjects.Email.Create(command.Email).Value;
             var number = PhoneNumber.Create(command.PhoneNumber).Value;
 
-            contact.Value.UpdateMainInfo(email, number, command.Description);
-            await _repository.Save(contact.Value);
+            await _repository.Update(command.Id, number, command.Name, email, command.Description);
+
+            //contact.Value.UpdateMainInfo(email, number, command.Description);
+            //await _repository.Save(contact.Value);
 
             return contact.Value.Id.Value;
 
