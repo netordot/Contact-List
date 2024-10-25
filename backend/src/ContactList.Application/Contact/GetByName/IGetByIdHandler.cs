@@ -3,8 +3,8 @@ using CSharpFunctionalExtensions;
 
 namespace ContactList.Application.Contact.GetByName
 {
-    public interface IGetByNameHandler
+    public interface IGetByIdHandler
     {
-        Task<Result<Domain.Contact.Contact, Error>> Handle(string Name, CancellationToken cancellationT);
+        Task<Result<Domain.Contact.Contact, Error>> Handle(Guid Id, CancellationToken cancellationT);
     }
 }

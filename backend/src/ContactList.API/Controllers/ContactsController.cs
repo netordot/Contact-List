@@ -36,7 +36,7 @@ namespace ContactList.API.Controllers
 
         }
 
-        [HttpPatch("{id:guid}/update")]
+        [HttpPut("{id:guid}/update")]
         public async Task<ActionResult> Update(
             [FromRoute] Guid id,
             [FromBody] UpdateContactRequest request,
@@ -69,16 +69,16 @@ namespace ContactList.API.Controllers
             return result;
         }
 
-        [HttpGet("{Name:alpha}/get")]
+        [HttpGet("{id:guid}/get")]
         public async Task<ActionResult<ContactDto>> GetByName(
-             string Name,
-            [FromServices] IGetByNameHandler handler,
+             [FromRoute] Guid id,
+            [FromServices] IGetByIdHandler handler,
             CancellationToken cancellation)
         {
-            var contact = await handler.Handle(Name, cancellation) ;
+            var contact = await handler.Handle(id, cancellation);
             var result = new ContactDto(
-                contact.Value.Name, 
-                contact.Value.PhoneNumber.Number, 
+                contact.Value.Name,
+                contact.Value.PhoneNumber.Number,
                 contact.Value.Description,
                 contact.Value.Email.Mail);
 
@@ -93,7 +93,7 @@ namespace ContactList.API.Controllers
         {
             var result = await handler.Handle(id, cancellation);
 
-            return new ObjectResult(result.Value) { StatusCode= 200 };
+            return new ObjectResult(result.Value) { StatusCode = 200 };
         }
     }
 }

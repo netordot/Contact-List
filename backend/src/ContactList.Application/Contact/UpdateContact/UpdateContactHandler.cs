@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ContactList.Application.Contact.UpdateContact
 {
     /// <summary>
-    /// Метод для обновления главной информации контакта, ищет по имени
+    /// Метод для обновления главной информации контакта, ищет по Id
     /// </summary>
     public class UpdateContactHandler : IUpdateContactHandler
     {
@@ -35,9 +35,6 @@ namespace ContactList.Application.Contact.UpdateContact
             var number = PhoneNumber.Create(command.PhoneNumber).Value;
 
             await _repository.Update(command.Id, number, command.Name, email, command.Description);
-
-            //contact.Value.UpdateMainInfo(email, number, command.Description);
-            //await _repository.Save(contact.Value);
 
             return contact.Value.Id.Value;
 
