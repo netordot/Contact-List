@@ -36,7 +36,7 @@ namespace ContactList.Application.Contact.UpdateContact
 
             await _repository.Update(command.Id, number, command.Name, email, command.Description);
 
-            return contact.Value.Id.Value;
+            return Id.Value;
 
         }
     }
