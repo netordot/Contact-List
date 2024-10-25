@@ -3,6 +3,7 @@ using ContactList.Application.Contact.Delete;
 using ContactList.Application.Contact.GetAll;
 using ContactList.Application.Contact.GetByName;
 using ContactList.Application.Contact.UpdateContact;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace ContactList.Application
             services.AddScoped<IDeleteContactHandler, DeleteContactHandler>();  
             services.AddScoped<IGetByIdHandler, GetByIdHandler>();
 
-            //services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
+            services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 
             return services;
         }
