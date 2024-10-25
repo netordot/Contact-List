@@ -46,4 +46,4 @@ docker-compose –version
 6.	Убедиться, что docker-compose лежит в корне проекта, запустить docker-compose up -d
    
 7.	Проверить, что все работает : docker ps
-
+   P.S в appsettings.json лежит заглушка, строку подключения к бд можно собрать из docker-compose или найти в user.secrets
