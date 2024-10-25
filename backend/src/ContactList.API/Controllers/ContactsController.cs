@@ -1,6 +1,7 @@
 ﻿using ContactList.API.Contracts;
 using ContactList.API.Contracts.Requests;
 using ContactList.API.Contracts.Response;
+using ContactList.API.Extensions;
 using ContactList.Application.Contact.CreateContact;
 using ContactList.Application.Contact.Delete;
 using ContactList.Application.Contact.GetAll;
@@ -29,8 +30,10 @@ namespace ContactList.API.Controllers
                 request.Description);
 
             var result = await handler.Handle(command, cancellation);
-            // добавить расширение для ошибки
-            int a = 10;
+            if(result.IsFailure)
+            {
+                return result.Error.ToResponse();
+            }
 
             return new ObjectResult(result.Value) { StatusCode = 200 };
 
@@ -52,7 +55,10 @@ namespace ContactList.API.Controllers
                 );
 
             var result = await handler.Handle(command, cancellation);
-            // обработка ошибок
+            if(result.IsFailure)
+            {
+                return result.Error.ToResponse();
+            }
 
             return new ObjectResult(result.Value) { StatusCode = 200 };
         }
@@ -65,17 +71,20 @@ namespace ContactList.API.Controllers
             var contacts = await handler.Handle(cancellation);
             var result = contacts.Value.Select(c => new ContactDto(c.Name, c.PhoneNumber.Number, c.Description, c.Email.Mail)).ToList();
 
-
             return result;
         }
 
         [HttpGet("{id:guid}/get")]
-        public async Task<ActionResult<ContactDto>> GetByName(
+        public async Task<ActionResult<ContactDto>> GetById(
              [FromRoute] Guid id,
             [FromServices] IGetByIdHandler handler,
             CancellationToken cancellation)
         {
             var contact = await handler.Handle(id, cancellation);
+            if(contact.IsFailure)
+            {
+                return contact.Error.ToResponse();
+            }
             var result = new ContactDto(
                 contact.Value.Name,
                 contact.Value.PhoneNumber.Number,
